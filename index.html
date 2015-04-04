@@ -6,15 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
+    <!-- DSP.js -->
+    <script src="js/dsp.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
 	function searchTrack(query){
-	SC.get('/tracks', { q: query }, function name(tracks) { 
-		console.log(tracks);
-		SC.stream("/tracks/"+tracks[0].id, function(sound) {
-			sound.play();});
-		});
+        SC.get('/tracks', { q: query }, function name(tracks) {
+            console.log(tracks);
+            SC.stream("/tracks/"+tracks[0].id, function(sound) {
+                sound.play();
+            });
+        });
 	}
 	</script>
 	<title>LivingSound</title>
