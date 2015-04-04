@@ -17,14 +17,9 @@ $id = $_GET['id'];
     <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
-        // "Constants"
-        var dontCare = -1;
+        // "Constants
         
-	function searchTrack(query)
-    {
-        SC.get('/tracks', { q: query }, function name(tracks) {
-            console.log(tracks);
-               
+	
            // Configuration
            var defaultNumSuggestions = 10;
         
@@ -149,8 +144,8 @@ $id = $_GET['id'];
             });
 			SC.stream("/tracks/"+<?php echo $id?>, function(sound) {
 			sound.play();});
-        });
-	}
+        
+
 	</script>
 </head>
 	
