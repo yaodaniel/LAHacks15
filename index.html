@@ -4,19 +4,47 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap -->
+	<!-- Bootstrap (and jQuery) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
     <!-- DSP.js -->
-    <script src="js/dsp.js"></script>
+    <script src="./js/dsp.js"></script>
+    <!-- Three.js -->
+    <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
-	function searchTrack(query){
+	function searchTrack(query)
+    {
         SC.get('/tracks', { q: query }, function name(tracks) {
             console.log(tracks);
-            SC.stream("/tracks/"+tracks[0].id, function(sound) {
-                sound.play();
+            SC.stream("/tracks/" + tracks[0].id, function(sound) {
+                      // Initialize canvas
+                      console.log("Initializing canvas");
+                      
+                  // Play sound
+                  sound.play({
+                             onfinish: function() {
+                                // Reset canvas
+                                 console.log("Resetting canvas");
+                             }
+                  });
+                  
+                  // Set whileplaying function
+                  sound.whileplaying = function() {
+                    // Manipulate canvas
+                      console.log("Manipulating canvas");
+                      
+                      // Reference for SM2 waveformdata
+                      //for (var i=0; i<256; i++) {
+                      //graphPixels[i].style.top = (gScale+Math.ceil(this.waveformData.left[i]*-gScale))+'px';
+                      //}
+                  }
+                  
+                  // Reference for DSP.js
+                  //var fft = new FFT(/* bufferSize: */ 2048, /* sampleRate: */ 44100);
+                  //fft.forward(signal);
+                  //var spectrum = fft.spectrum;
             });
         });
 	}
