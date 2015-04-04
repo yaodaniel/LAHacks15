@@ -14,8 +14,8 @@
     <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
-        // "Constants"
-        var dontCare = -1;
+    // "Constants"
+    var dontCare = -1;
         
 	function searchTrack(query)
     {
@@ -43,21 +43,21 @@
 			
             // Note: Probably moving this to another page
             SC.stream("/tracks/" + tracks[0].id, function(sound) {
-                      // Initialize canvas
+                // Initialize canvas
                 console.log("Initializing canvas");
                       
                 // Configuration variables
                 var numCubes = 100;
                 var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-                  var defaultCubePosition = { x: -15, y: 0, z: 0 };
-                  var startingHeightBound = 15;
-                  var averageVelocity = 0.25;
-                  var initialDirection = { x: 1, y: 0 };
-                  var defaultCubeSize = 1;
-                  
-                  // State variables
-                  var isPlaying = true;
-                  var currentDirection = { x: 1, y: 0 }; // x, y := { -1, 0, 1 }
+                var defaultCubePosition = { x: -15, y: 0, z: 0 };
+                var startingHeightBound = 15;
+                var averageVelocity = 0.25;
+                var initialDirection = { x: 1, y: 0 };
+                var defaultCubeSize = 1;
+
+                // State variables
+                var isPlaying = true;
+                var currentDirection = { x: 1, y: 0 };
 
                 // Initialize scene
                 var scene = new THREE.Scene();
@@ -65,42 +65,42 @@
                 var renderer = new THREE.WebGLRenderer();
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 document.body.appendChild(renderer.domElement);
-                      camera.position.z = defaultCameraPosition.z;
+                camera.position.z = defaultCameraPosition.z;
 
                 // Set up the scene
                 var cubes = [];
                       
-                      // Set up lighting
-                      var ambientLight = new THREE.AmbientLight(0x808080);
-                      var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
-                      
-                      // Add lights to scene
-                      scene.add(directionalLight);
-                      scene.add(ambientLight);
+                // Set up lighting
+                var ambientLight = new THREE.AmbientLight(0x808080);
+                var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
 
-                      // Add cubes to scene
+                // Add lights to scene
+                scene.add(directionalLight);
+                scene.add(ambientLight);
+
+                // Add cubes to scene
                 for (var i = 0; i < numCubes; i++)
                 {
-                      // Set up cube
+                    // Set up cube
                     var geometry = new THREE.BoxGeometry(defaultCubeSize, defaultCubeSize, defaultCubeSize);
                     var material = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
                     var cube = new THREE.Mesh(geometry, material);
-                      
-                      cube.position.x = defaultCubePosition.x;
-                      cube.position.y = defaultCubePosition.y + (-startingHeightBound + Math.random() * startingHeightBound * 2);
-                      cube.position.z = defaultCubePosition.z;
-                      
-                      // Add cube to scene
-                      scene.add(cube);
-                      
-                      // Add cube to array for future reference
+
+                    cube.position.x = defaultCubePosition.x;
+                    cube.position.y = defaultCubePosition.y + (-startingHeightBound + Math.random() * startingHeightBound * 2);
+                    cube.position.z = defaultCubePosition.z;
+
+                    // Add cube to scene
+                    scene.add(cube);
+
+                    // Add cube to array for future reference
                     cubes.push(cube);
                 }
                       
-                      // Configure render behavior
+                // Configure render behavior
                 function render()
                 {
-                      // Schedule next frame
+                    // Schedule next frame
                     if (isPlaying)
                     {
                       requestAnimationFrame(render);
@@ -111,12 +111,12 @@
                     
                 }
                       
-                      // Call first render
-                      render();
+                // Call first render
+                render();
 
                 // Play sound
                 sound.play({
-                           // Responsible for resetting animations and performing other clean-up.
+                    // Responsible for resetting animations and performing other clean-up.
                      onfinish: function() {
                         // Reset canvas
                          console.log("Resetting canvas");
@@ -144,8 +144,10 @@
                 //fft.forward(signal);
                 //var spectrum = fft.spectrum;
             });
-			//SC.stream("/tracks/"+tracks[0].id, function(sound) {
-			//sound.play();});
+               
+			SC.stream("/tracks/"+tracks[0].id, function(sound) {
+                      sound.play();
+            });
         });
 	}
 	</script>
