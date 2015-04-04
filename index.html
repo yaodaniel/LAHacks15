@@ -21,20 +21,25 @@
     {
         SC.get('/tracks', { q: query }, function name(tracks) {
             console.log(tracks);
-            
+               
+           // Configuration
+           var defaultNumSuggestions = 10;
+        
 			//var resultLen = tracks.length;
 			$("#results").empty();
 			$("#results").append("<br>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[1].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[2].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[3].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[4].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[5].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[6].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[7].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[8].title+"</b></a>");
-			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[9].title+"</b></a>");
+            
+           for (var i = 0; i < defaultNumSuggestions; i++)
+           {
+               if (i == 0)
+               {
+                   $("#results").append("<a href=\"#\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
+               }
+               else
+               {
+                   $("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
+               }
+           }
 			
             // Note: Probably moving this to another page
             SC.stream("/tracks/" + tracks[0].id, function(sound) {
@@ -44,15 +49,15 @@
                 // Configuration variables
                 var numCubes = 100;
                 var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-                      var defaultCubePosition = { x: -15, y: 0, z: 0 };
-                      var startingHeightBound = 15;
-                      var averageVelocity = 0.25;
-                      var initialDirection = { x: 1, y: 0 };
-                      var defaultCubeSize = 1;
-                      
-                      // State variables
-                      var isPlaying = true;
-                      var currentDirection = { x: 1, y: 0 }; // x, y := { -1, 1 }
+                  var defaultCubePosition = { x: -15, y: 0, z: 0 };
+                  var startingHeightBound = 15;
+                  var averageVelocity = 0.25;
+                  var initialDirection = { x: 1, y: 0 };
+                  var defaultCubeSize = 1;
+                  
+                  // State variables
+                  var isPlaying = true;
+                  var currentDirection = { x: 1, y: 0 }; // x, y := { -1, 0, 1 }
 
                 // Initialize scene
                 var scene = new THREE.Scene();
