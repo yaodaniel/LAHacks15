@@ -17,9 +17,7 @@ $id = $_GET['id'];
     <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
-        // "Constants
         
-	
            // Configuration
            var defaultNumSuggestions = 10;
         
