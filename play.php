@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-$id = $_GET['id'];
+$id = $_GET['song'];
 ?>
 <head>
 	<meta charset="utf-8">
@@ -12,9 +12,9 @@ $id = $_GET['id'];
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
     <!-- DSP.js -->
-    <script src="./js/dsp.js"></script>
+    <script src="js/dsp.js"></script>
     <!-- Three.js -->
-    <script src="./js/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
     // "Constants"
