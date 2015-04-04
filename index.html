@@ -33,11 +33,12 @@
                       var defaultCubePosition = { x: -15, y: 0, z: 0 };
                       var startingHeightBound = 15;
                       var averageVelocity = 0.25;
-                      var direction = { x: 1, y: 0 };
+                      var initialDirection = { x: 1, y: 0 };
                       var defaultCubeSize = 1;
                       
                       // State variables
                       var isPlaying = true;
+                      var currentDirection = { x: 1, y: 0 }; // x, y := { -1, 1 }
 
                 // Initialize scene
                 var scene = new THREE.Scene();
@@ -96,10 +97,7 @@
 
                 // Play sound
                 sound.play({
-                           //
-                           // onfinish
                            // Responsible for resetting animations and performing other clean-up.
-                           //
                      onfinish: function() {
                         // Reset canvas
                          console.log("Resetting canvas");
@@ -111,10 +109,7 @@
                      
                       // Configure update function for sound
                       
-                      //
-                      // whileplaying
                       // Updates variable state to reflect the music signal's "spectrum" transform
-                      //
                 sound.whileplaying = function() {
                     // Manipulate canvas
                     console.log("Manipulating canvas");
