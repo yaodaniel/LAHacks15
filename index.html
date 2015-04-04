@@ -18,33 +18,106 @@
     {
         SC.get('/tracks', { q: query }, function name(tracks) {
             console.log(tracks);
+               
+            // Note: Probably moving this to another page
             SC.stream("/tracks/" + tracks[0].id, function(sound) {
                       // Initialize canvas
-                      console.log("Initializing canvas");
+                console.log("Initializing canvas");
+
+                // Configuration variables
+                var numCubes = 100;
+                var defaultCameraPosition = { x: 0, y: 0, z: 10 };
                       
-                  // Play sound
-                  sound.play({
-                             onfinish: function() {
-                                // Reset canvas
-                                 console.log("Resetting canvas");
-                             }
-                  });
-                  
-                  // Set whileplaying function
-                  sound.whileplaying = function() {
+                      // State variables
+                      var isPlaying = true;
+
+                // Initialize scene
+                var scene = new THREE.Scene();
+                var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                var renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+                      camera.position.z = defaultCameraPosition.z;
+
+                // Set up the scene
+                var cubes = [];
+                      
+                      // Set up lighting
+                      var ambientLight = new THREE.AmbientLight(0x808080);
+                      var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+                      
+                      // Add lights to scene
+                      scene.add(directionalLight);
+                      scene.add(ambientLight);
+
+                      // Add cubes to scene
+                for (var i = 0; i < numCubes; i++)
+                {
+                      // Set up cube
+                    var geometry = new THREE.BoxGeometry(1, 1, 1);
+                    var material = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
+                    var cube = new THREE.Mesh(geometry, material);
+                      
+                      // Add cube to scene
+                      scene.add(cube);
+                      
+                      // Add cube to array for future reference
+                    cubes.push(cube);
+                }
+                      
+                      // Configure render behavior
+                function render()
+                {
+                      // Schedule next frame
+                    if (isPlaying)
+                    {
+                      requestAnimationFrame(render);
+                      renderer.render(scene, camera);
+                    }
+                      
+                    // Update scene as appropriate
+                      
+                }
+                      
+                      // Call first render
+                      render();
+
+                // Play sound
+                sound.play({
+                           
+                           //
+                           // onfinish
+                           // Responsible for resetting animations and performing other clean-up.
+                           //
+                     onfinish: function() {
+                        // Reset canvas
+                         console.log("Resetting canvas");
+                           
+                           // Update state to reflect that sound is no longer playing
+                           isPlaying = false;
+                     }
+                });
+                     
+                      // Configure update function for sound
+                      
+                      //
+                      // whileplaying
+                      // Updates animations during music playback.
+                      //
+                sound.whileplaying = function() {
                     // Manipulate canvas
-                      console.log("Manipulating canvas");
-                      
-                      // Reference for SM2 waveformdata
-                      //for (var i=0; i<256; i++) {
-                      //graphPixels[i].style.top = (gScale+Math.ceil(this.waveformData.left[i]*-gScale))+'px';
-                      //}
-                  }
-                  
-                  // Reference for DSP.js
-                  //var fft = new FFT(/* bufferSize: */ 2048, /* sampleRate: */ 44100);
-                  //fft.forward(signal);
-                  //var spectrum = fft.spectrum;
+                    console.log("Manipulating canvas");
+
+                    // Reference for SM2 waveformdata
+                    //for (var i=0; i<256; i++) {
+                    //graphPixels[i].style.top = (gScale+Math.ceil(this.waveformData.left[i]*-gScale))+'px';
+                    //}
+                }
+
+                // Reference for DSP.js
+                //var fft = new FFT(/* bufferSize: */ 2048, /* sampleRate: */ 44100);
+                //fft.forward(signal);
+                //var spectrum = fft.spectrum;
             });
         });
 	}
