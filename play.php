@@ -53,7 +53,7 @@ $id = $_GET['id'];
                 var numCubes = 100;
                 var defaultCameraPosition = { x: 0, y: 0, z: 10 };
                   var defaultCubePosition = { x: -15, y: 0, z: 0 };
-                  var startingHeightBound = 15;
+                  var startingWidthBound = 15;
                   var averageVelocity = 0.25;
                   var initialDirection = { x: 1, y: 0 };
                   var defaultCubeSize = 1;
@@ -89,8 +89,8 @@ $id = $_GET['id'];
                     var material = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
                     var cube = new THREE.Mesh(geometry, material);
                       
-                      cube.position.x = defaultCubePosition.x;
-                      cube.position.y = defaultCubePosition.y + (-startingHeightBound + Math.random() * startingHeightBound * 2);
+                      cube.position.x = defaultCubePosition.x + (-startingWidthBound + Math.random() * startingWidthBound * 2);
+                      cube.position.y = defaultCubePosition.y;
                       cube.position.z = defaultCubePosition.z;
                       
                       // Add cube to scene
