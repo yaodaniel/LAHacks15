@@ -14,6 +14,9 @@
     <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
+        // "Constants"
+        var dontCare = -1;
+        
 	function searchTrack(query)
     {
         SC.get('/tracks', { q: query }, function name(tracks) {
@@ -23,10 +26,15 @@
             SC.stream("/tracks/" + tracks[0].id, function(sound) {
                       // Initialize canvas
                 console.log("Initializing canvas");
-
+                      
                 // Configuration variables
                 var numCubes = 100;
                 var defaultCameraPosition = { x: 0, y: 0, z: 10 };
+                      var defaultCubePosition = { x: -15, y: 0, z: 0 };
+                      var startingHeightBound = 15;
+                      var averageVelocity = 0.25;
+                      var direction = { x: 1, y: 0 };
+                      var defaultCubeSize = 1;
                       
                       // State variables
                       var isPlaying = true;
@@ -54,9 +62,13 @@
                 for (var i = 0; i < numCubes; i++)
                 {
                       // Set up cube
-                    var geometry = new THREE.BoxGeometry(1, 1, 1);
+                    var geometry = new THREE.BoxGeometry(defaultCubeSize, defaultCubeSize, defaultCubeSize);
                     var material = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
                     var cube = new THREE.Mesh(geometry, material);
+                      
+                      cube.position.x = defaultCubePosition.x;
+                      cube.position.y = defaultCubePosition.y + (-startingHeightBound + Math.random() * startingHeightBound * 2);
+                      cube.position.z = defaultCubePosition.z;
                       
                       // Add cube to scene
                       scene.add(cube);
@@ -75,8 +87,8 @@
                       renderer.render(scene, camera);
                     }
                       
-                    // Update scene as appropriate
-                      
+                    // Update scene as appropriate using variables that whileplaying() updates
+                    
                 }
                       
                       // Call first render
@@ -84,7 +96,6 @@
 
                 // Play sound
                 sound.play({
-                           
                            //
                            // onfinish
                            // Responsible for resetting animations and performing other clean-up.
@@ -102,7 +113,7 @@
                       
                       //
                       // whileplaying
-                      // Updates animations during music playback.
+                      // Updates variable state to reflect the music signal's "spectrum" transform
                       //
                 sound.whileplaying = function() {
                     // Manipulate canvas
