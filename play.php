@@ -152,39 +152,7 @@ $id = $_GET['id'];
         });
 	}
 	</script>
-	<title>LivingSound</title>
 </head>
-
-<body style="background-image: url(assets/nature.jpg); height:100%;">
-<nav class="navbar navbar-default" style="background:rgba(255,255,255,0.95)">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="/index.html">Home</a>
-		</div>
-	</div>
-</nav>
-<div class="container">
-	
-	
-	<div class="row" style="position: relative; top:30vh">
-	<h1 class="text-center">Visualize your favourite song!</h1>
-		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
-		  <div class="col-xs-8 col-xs-offset-2" id="form">
-			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:50px;
-				border-radius:20px"
-				placeholder="Search for a song..." class="form-control">
-		  </div>
-		  <!--<button type="submit" class="btn btn-default" style="col-xs-2; height:50px">Search</button>-->
-		</form>
-		<div class="col-xs-8 col-xs-offset-2" style="border-radius:20px">
-		<div class="list-group" id="results" style="border-radius:20px"></div></div>
-	</div>
 	
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
