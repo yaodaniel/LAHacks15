@@ -21,7 +21,21 @@
     {
         SC.get('/tracks', { q: query }, function name(tracks) {
             console.log(tracks);
-               
+            
+			//var resultLen = tracks.length;
+			$("#results").empty();
+			$("#results").append("<br>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[1].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[2].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[3].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[4].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[5].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[6].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[7].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[8].title+"</b></a>");
+			$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[9].title+"</b></a>");
+			
             // Note: Probably moving this to another page
             SC.stream("/tracks/" + tracks[0].id, function(sound) {
                       // Initialize canvas
@@ -125,6 +139,8 @@
                 //fft.forward(signal);
                 //var spectrum = fft.spectrum;
             });
+			//SC.stream("/tracks/"+tracks[0].id, function(sound) {
+			//sound.play();});
         });
 	}
 	</script>
@@ -148,7 +164,7 @@
 <div class="container">
 	
 	
-	<div class="row" style="position: relative; top:50vh">
+	<div class="row" style="position: relative; top:30vh">
 	<h1 class="text-center">Visualize your favourite song!</h1>
 		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
 		  <div class="col-xs-8 col-xs-offset-2" id="form">
@@ -158,6 +174,8 @@
 		  </div>
 		  <!--<button type="submit" class="btn btn-default" style="col-xs-2; height:50px">Search</button>-->
 		</form>
+		<div class="col-xs-8 col-xs-offset-2" style="border-radius:20px">
+		<div class="list-group" id="results" style="border-radius:20px"></div></div>
 	</div>
 	
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
