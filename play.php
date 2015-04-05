@@ -72,7 +72,6 @@ $id = $_GET['song'];
 	<script>
     // State globals
     var cubes = [];
-
 	window.onload = function() {
         var player = document.getElementById('player');
         var canvasElement = document.getElementById('canvas');
