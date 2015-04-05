@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
-    <!-- DSP.js -->
-    <script src="./js/dsp.js"></script>
-    <!-- Three.js -->
-    <script src="./js/three.min.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
 	<script>
         // "Constants"
@@ -34,22 +30,31 @@
                if (i == 0)
                {
 //$("results").append("<form action=\"play.html\" method=\"GET\"><input type=\"text\" song=tracks/> <a href=\"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a></form>");
-                   $("#results").append("<a href=\"/play.php?song="+tracks[0].id+"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
+                   $("#results").append("<a href=\"/play.php?song="+tracks[0].stream_url+"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
                }
                else
                {
                    //$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
-				   $("#results").append("<a href=\"/play.php?song="+tracks[i].id+"\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
+				   $("#results").append("<a href=\"/play.php?song="+tracks[i].stream_url+"\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
                }
            }
         });
 	}
 	</script>
+	<script>
+	function changeBackground(){
+		var images = ['nature0.jpg', 'nature1.jpg', 'nature2.jpg', 'nature3.jpg', 'nature4.jpg', 'nature5.jpg'];
+		var randomNum = Math.floor(Math.random() * images.length);
+		var imageToChange = images[randomNum];
+		document.body.style.backgroundImage = "url(assets/"+imageToChange+")";
+	}
+</script>
+	</script>
 	<title>LivingSound</title>
 </head>
 
-<body style="background-image: url(assets/nature.jpg); height:100%;">
-<nav class="navbar navbar-default" style="background:rgba(255,255,255,0.95)">
+<body style="height:100%;" onload="changeBackground()">
+<nav class="navbar navbar-default" style="background:rgba(255,255,255,0.7)">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -66,10 +71,10 @@
 	
 	
 	<div class="row" style="position: relative; top:30vh">
-	<h1 class="text-center">Visualize your favourite song!</h1>
+	<h1 class="text-center" style="font-size:60px; color:rgb(197,48,144);">Visualize your favourite song!</h1>
 		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
 		  <div class="col-xs-8 col-xs-offset-2" id="form">
-			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:50px;
+			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:60px;
 				border-radius:20px"
 				placeholder="Search for a song..." class="form-control">
 		  </div>
