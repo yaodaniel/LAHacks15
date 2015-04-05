@@ -157,6 +157,19 @@ $id = $_GET['song'];
 	</script>
 </head>
 <body>
+<nav class="navbar navbar-default" style="background:rgba(255,255,255,0.7)">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/index.html">Home</a>
+		</div>
+	</div>
+</nav>	
 	<canvas id="canvas" width="1600" height="408" style="height:80vh; width:100vw">
 	<audio id="player" controls="" autoplay="" preload autobuffer></audio>
 	
@@ -164,6 +177,13 @@ $id = $_GET['song'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-             
+<div style="height:350px; clear:both;"></div>           
 </body>
+<div id="footer" style="height:50px; width:100%; background-color: rgba(0,0,0,0.7); position:fixed; bottom:0">
+	<div class="container">
+		<div class="col-xs-8 col-xs-offset-3" id="form">
+		<p class="muted credit" style="color:#337ab7; padding-top:5px">Website made and designed by Daniel Yao, Ian Cordero, & Paul Grad at LAHacks15</p>
+		</div>
+	</div>
+</div>
 </html>
