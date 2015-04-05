@@ -416,3 +416,80 @@ function fireworks() {
 	// Begin stream and drawing runs
     audioSource.playStream(loader.streamUrl);
 }
+
+function blackHole() {
+	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	var container, stats;
+	var camera, scene, renderer;
+	var uniforms;
+	var audioSource = new SoundCloudAudioSource(player);
+
+	init();
+	animate();
+
+	function init() {
+
+		container = document.getElementById( 'container' );
+
+		camera = new THREE.Camera();
+		camera.position.z = 1;
+
+		scene = new THREE.Scene();
+
+		var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+
+		uniforms = {
+			time: { type: "f", value: 1.0 },
+			resolution: { type: "v2", value: new THREE.Vector2() }
+		};
+
+		var material = new THREE.ShaderMaterial( {
+
+			uniforms: uniforms,
+			vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+
+		} );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+	
+		renderer = new THREE.WebGLRenderer();
+		renderer.setPixelRatio( window.devicePixelRatio );
+		container.appendChild( renderer.domElement );
+	
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		container.appendChild( stats.domElement );
+	
+		onWindowResize();
+	
+		window.addEventListener( 'resize', onWindowResize, false );
+
+	}
+
+	function onWindowResize( event ) {
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		uniforms.resolution.value.x = renderer.domElement.width;
+		uniforms.resolution.value.y = renderer.domElement.height;
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		render();
+		stats.update();
+
+	}
+
+	function render2() {
+		
+		uniforms.time.value += audioSource.volume;    //Here is where you can sync the animation with the music. audioSource hold the volume actually.
+		renderer.render( scene, camera );
+	}
+}
