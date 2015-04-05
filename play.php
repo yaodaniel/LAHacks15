@@ -26,10 +26,6 @@ $id = $_GET['song'];
 		analyser.connect(audioCtx.destination);
 		var sampleAudioStream = function() {
 			analyser.getByteFrequencyData(self.streamData);
-            if (Math.random() < 0.01)
-            {
-                console.log(self.streamData);
-            }
 			// calculate an overall volume value
 			var total = 0;
 			for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
