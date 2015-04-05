@@ -84,7 +84,8 @@ $id = $_GET['song'];
         // Configuration variables
         var defaultCameraPosition = { x: 0, y: 0, z: 10 };
         var startingCubePosition = { x: 0, y: 0, z: 0 };
-        var maxDisplacement = { width: 30, height: 0, length: 0 };
+        var maxDisplacementX = { width: 30, height: 0, length: 0 };
+        var maxDisplacementY = { width: 0, height: 30, length: 0 };
         var displacementScalar = 0.02;
         
         // Initialize the scene
@@ -111,8 +112,8 @@ $id = $_GET['song'];
             var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
             var cube = new THREE.Mesh(geometry, material);
             
-            cube.position.x = startingCubePosition.x + (-maxDisplacement.width + Math.random() * 2 * maxDisplacement.width);
-            cube.position.y = startingCubePosition.y;
+            cube.position.x = Math.cos(startingCubePosition.x + (-maxDisplacementX.width + Math.random() * 2 * maxDisplacementX.width));
+            cube.position.y = Math.sin(startingCubePosition.y + (-maxDisplacementY.height + Math.random() * 2 * maxDisplacementY.Height));
             cube.position.z = startingCubePosition.z;
             
             // Add cube to the scene
