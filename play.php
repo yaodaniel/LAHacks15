@@ -69,6 +69,14 @@ $id = $_GET['song'];
 		this.player.play();
 	}
 	</script>
+	<script>
+	window.onload = function init() {
+		var player = document.getElementById('player');
+		var loader = new SoundcloudLoader(player);
+		var audioSource = new SoundCloudAudioSource(player);
+		audioSource.playStream(loader.streamUrl);
+	}
+	</script>
 </head>
 <body>
 	<canvas width="1600" height="408" style="height:80vh; width:100vw">
