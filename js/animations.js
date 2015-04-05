@@ -207,7 +207,9 @@ function cubeAnimation()
 }
 
 function fireworks() {
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	if ( ! Detector.webgl ) {
+		Detector.addGetWebGLMessage();
+	}
 	
 	var player = document.getElementById('player');
     var canvasElement = document.getElementById('canvas');
@@ -338,7 +340,7 @@ function fireworks() {
 	
 		requestAnimationFrame( animate );
 	
-		render();
+		render1();
 	
 	}
 	
@@ -366,8 +368,35 @@ function fireworks() {
 					object.scale.x = object.scale.y = object.scale.z = object.originalScale + ((i/5+1) * (1 + 0.5 * Math.sin( 7*time ) ));
 				}
 			}
+		}
 	    // Schedule next animation frame
         requestAnimationFrame(draw);
+	}
+	
+	function render1() {
+		camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
+		camera.lookAt( scene.position );
+	
+		renderer.render( scene, camera );
+	
+		var time = Date.now() * 0.0001;
+	
+		for ( var i = 0; i < scene.children.length; i ++ ) {
+			var val = audioSource.streamData[i];
+			val /= 255;
+			var object = scene.children[ i ];
+			if ( object instanceof THREE.Line ) {
+				object.rotation.y = time * ( i < 4 ? ( i + 1 ) : - ( i + 1 ) );
+				if(val > 0.90) {
+					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*sin(time);
+				}
+				else if(val < 0.10) {
+					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*sin(time);
+				}
+                else
+                    object.scale.x = object.scale.y = object.scale.z = object.originalScale-(0.05*val)*sin(time);
+			}
+		}
 	}
 	
 	// Begin stream and drawing runs
