@@ -84,8 +84,9 @@ $id = $_GET['song'];
         // Configuration variables
         var defaultCameraPosition = { x: 0, y: 0, z: 10 };
         var startingCubePosition = { x: 0, y: 0, z: 0 };
-        var maxDisplacement = { width: 0, height: 15, length: 0 };
-        var displacementScalar = 10;
+        var maxDisplacementX = { width: 30, height: 0, length: 0 };
+        var maxDisplacementY = { width: 0, height: 30, length: 0 };
+        var displacementScalar = 0.02;
         
         // Initialize the scene
         var scene = new THREE.Scene();
@@ -111,8 +112,8 @@ $id = $_GET['song'];
             var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
             var cube = new THREE.Mesh(geometry, material);
             
-            cube.position.x = startingCubePosition.x;
-            cube.position.y = startingCubePosition.y + (-maxDisplacement.y + Math.random() * maxDisplacement.y);
+            cube.position.x = Math.cos(startingCubePosition.x + (-maxDisplacementX.width + Math.random() * 2 * maxDisplacementX.width));
+            cube.position.y = Math.sin(startingCubePosition.y + (-maxDisplacementY.height + Math.random() * 2 * maxDisplacementY.Height));
             cube.position.z = startingCubePosition.z;
             
             // Add cube to the scene
@@ -127,7 +128,7 @@ $id = $_GET['song'];
             // and use it to draw whatever you like on your canvas
             for (var i = 0; i < audioSource.streamData.length; i++)
             {
-                var cube = cubes[i];
+                var cube = cubes[i % cubes.length % audioSource.streamData.length]; // subject to change
                 
                 // do something with each value. Here's a simple example
                 var val = audioSource.streamData[i];
@@ -139,11 +140,15 @@ $id = $_GET['song'];
                 // use lines and shapes to draw to the canvas is various ways. Use your imagination!
                 
                 // Displace cubes
-                //cube.position.y = startingCubePosition.y + val * displacementScalar;
+                var displacement = val * displacementScalar;
+                cube.position.y = startingCubePosition.y + (Math.random() < 0.5) ? displacement : -displacement; // randomize direction of displacement
                 
                 // Rotate cubes
-                //cube.rotation.x = 0.1;
-                //cube.rotation.y = 0.1;
+                cube.rotation.x += 0.2 * Math.random(); // randomize rotation speed
+                cube.rotation.y += 0.2 * Math.random();
+                
+                // Render scene
+                renderer.render(scene, camera);
             }
             
             // Schedule next animation frame
