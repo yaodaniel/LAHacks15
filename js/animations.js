@@ -7,7 +7,7 @@ function cubeAnimation()
     var audioSource = new SoundCloudAudioSource(player);
 
     // Assign choice
-    var choice = 0;
+    var choice = 1;
 
     // Scene set-up
 
@@ -56,6 +56,9 @@ function cubeAnimation()
 
     for (var i = 0; i < numSamples; i++)
     {
+        var parameters = [];
+        var sprites = [];
+        
         // Initialize scenes
         switch (choice)
         {
@@ -79,7 +82,7 @@ function cubeAnimation()
                 var geometry = new THREE.Geometry();
                 var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
                 
-                var sprites = [
+                sprites = [
                                THREE.ImageUtils.loadTexture("./assets/snowflake1.png"),
                                THREE.ImageUtils.loadTexture("./assets/snowflake2.png"),
                                THREE.ImageUtils.loadTexture("./assets/snowflake3.png"),
@@ -87,7 +90,7 @@ function cubeAnimation()
                                THREE.ImageUtils.loadTexture("./assets/snowflake5.png"),
                                ];
                 
-                var parameters = [
+                parameters = [
                                   [ [1.0, 0.2, 0.5], sprites[0], 20 ],
                                   [ [0.95, 0.1, 0.5], sprites[1], 15 ],
                                   [ [0.90, 0.05, 0.5], sprites[2], 10 ],
@@ -181,7 +184,7 @@ function cubeAnimation()
                         }
                     }
                     
-                    for (var j = 0; i < materials.length; j++)
+                    for (var j = 0; j < materials.length; j++)
                     {
                         color = parameters[j][0];
                         
