@@ -207,8 +207,9 @@ function cubeAnimation()
 }
 
 function fireworks() {
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-	
+	if ( ! Detector.webgl ) {
+		Detector.addGetWebGLMessage();
+	}
 	var player = document.getElementById('player');
     var canvasElement = document.getElementById('canvas');
     var context = canvasElement.getContext("2d");
@@ -366,6 +367,7 @@ function fireworks() {
 					object.scale.x = object.scale.y = object.scale.z = object.originalScale + ((i/5+1) * (1 + 0.5 * Math.sin( 7*time ) ));
 				}
 			}
+		}	
 	    // Schedule next animation frame
         requestAnimationFrame(draw);
 	}
