@@ -486,8 +486,10 @@ function blackHole() {
 	animate();
 
 	function init() {
-
-		container = document.getElementById( 'canvas' );
+		var container;
+    	
+    	container = document.createElement( 'div' );
+    	document.body.appendChild( container );
 
 		camera = new THREE.Camera();
 		camera.position.z = 1;
@@ -544,10 +546,18 @@ function blackHole() {
 		stats.update();
 
 	}
-
+	var total = 0;
+	var average;
 	function render() {
-		
-		uniforms.time.value += 0.05;    //Here is where you can sync the animation with the music. audioSource hold the volume actually.
+		if(average < 50) {
+			total += audioSource.volume;
+			average++;
+		}
+		else {
+		    average = total / average;
+		    uniforms.time.value = average;
+			average = 0;
+		}
 		renderer.render( scene, camera );
 	}
 	// Begin stream and drawing runs
