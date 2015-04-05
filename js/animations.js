@@ -210,7 +210,6 @@ function fireworks() {
 	if ( ! Detector.webgl ) {
 		Detector.addGetWebGLMessage();
 	}
-	
 	var player = document.getElementById('player');
     var canvasElement = document.getElementById('canvas');
     var context = canvasElement.getContext("2d");
