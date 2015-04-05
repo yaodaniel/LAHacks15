@@ -8,10 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
-	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});
-        // "Constants"
-        var dontCare = -1;
-        
+	<script>
+	SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});
 	function searchTrack(query)
     {
         SC.get('/tracks', { q: query }, function name(tracks) {
@@ -28,12 +26,10 @@
            {
                if (i == 0)
                {
-//$("results").append("<form action=\"play.html\" method=\"GET\"><input type=\"text\" song=tracks/> <a href=\"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a></form>");
                    $("#results").append("<a href=\"/play.php?song="+tracks[0].stream_url+"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
                }
                else
                {
-                   //$("#results").append("<a href=\"#\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
 				   $("#results").append("<a href=\"/play.php?song="+tracks[i].stream_url+"\" class=\"list-group-item\"><b>"+tracks[i].title+"</b></a>");
                }
            }
@@ -65,14 +61,13 @@
 </nav>
 <div class="container">
 	<div class="row" style="position: relative; top:30vh">
-	<h1 class="text-center" style="font-size:60px; color:rgb(197,48,144);">Visualize your favourite song!</h1>
+	<h1 class="text-center" style="font-size:60px; color:rgb(197,48,144);">Visualize your favorite song!</h1>
 		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
 		  <div class="col-xs-8 col-xs-offset-2" id="form">
 			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:60px;
 				border-radius:20px"
 				placeholder="Search for a song..." class="form-control">
 		  </div>
-		  <!--<button type="submit" class="btn btn-default" style="col-xs-2; height:50px">Search</button>-->
 		</form>
 		<div class="col-xs-8 col-xs-offset-2" style="border-radius:20px">
 		<div class="list-group" id="results" style="border-radius:20px"></div></div>
