@@ -14,6 +14,9 @@ $id = $_GET['song'];
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+	<script src="js/Detector.js"></script>
+	<script src="js/stats.min.js"></script>
+	<script src="js/three.min.js"></script>
 
 	<script>
 	var SoundCloudAudioSource = function(player) {
@@ -69,7 +72,7 @@ $id = $_GET['song'];
 		}
 	}
 	</script>
-    <script src="./animations.js"></script>
+    <script src="./js/animations.js"></script>
 	<script>
     // State globals
     var cubes = [];
@@ -102,10 +105,27 @@ $id = $_GET['song'];
     }
 
 	window.onload = function() {
-        cubeAnimation();
+        //cubeAnimation();
+	fireworks();
 	}
 	</script>
 </head>
+<nav class="navbar navbar-default" style="background:rgba(255,255,255,0.7)">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="">Home</a>
+			<a class="navbar-brand" href="">Sign in</a>
+			<a class="navbar-brand" href="">Register</a>
+			<a class="navbar-brand" href="">Share</a>
+		</div>
+	</div>
+</nav>
 <body>
 	<canvas id="canvas" width="1600" height="408" style="height:80vh; width:100vw">
 	<audio id="player" controls="" autoplay="" preload autobuffer></audio>
