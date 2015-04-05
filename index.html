@@ -27,6 +27,8 @@
             
            for (var i = 0; i < defaultNumSuggestions; i++)
            {
+			   if(i >= tracks.length)
+					break;
                if (i == 0)
                {
                    $("#results").append("<a href=\"/play.php?song="+tracks[0].stream_url+"\" class=\"list-group-item active\"><b>"+tracks[0].title+"</b></a>");
@@ -64,6 +66,8 @@
 			<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="">Home</a>
+			<a class="navbar-brand" href="">Sign in</a>
+			<a class="navbar-brand" href="">Register</a>
 		</div>
 	</div>
 </nav>
