@@ -7,13 +7,14 @@ $id = $_GET['song'];
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
-	<!--<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>-->
+
 	<script>
 	var SoundCloudAudioSource = function(player) {
 		var self = this;
@@ -70,29 +71,70 @@ $id = $_GET['song'];
 	</script>
 	<script>
 	window.onload = function() {
-		var player = document.getElementById('player');
-		var canvasElement = document.getElementById('canvas');
-		var context = canvasElement.getContext("2d");
-		var loader = new SoundcloudLoader(player);
-		var audioSource = new SoundCloudAudioSource(player);
-		var draw = function() {
-    // you can then access all the frequency and volume data
-    // and use it to draw whatever you like on your canvas
-    for(var bin = 0; bin < audioSource.streamData.length; bin ++) {
-        // do something with each value. Here's a simple example
-        var val = audioSource.streamData[bin];
-        var red = val;
-        var green = 255 - val;
-        var blue = val / 2; 
-        context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-        context.fillRect(bin * 2, 0, 2, 200);
-        // use lines and shapes to draw to the canvas is various ways. Use your imagination!
-    }
-    requestAnimationFrame(draw);
-	};
-		
-		audioSource.playStream(loader.streamUrl);
-		draw();
+        var player = document.getElementById('player');
+        var canvasElement = document.getElementById('canvas');
+        var context = canvasElement.getContext("2d");
+        var loader = new SoundcloudLoader(player);
+        var audioSource = new SoundCloudAudioSource(player);
+        
+        var draw = function() {
+            var cubes = [];
+            
+            // Configuration variables
+            var defaultCameraPosition = { x: 0, y: 0, z: 10 };
+            var startingCubePosition = { x: 0, y: 0, z: 0 };
+            
+            // State variables
+            
+            // Initialize the scene
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSze(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            camera.position.z = defaultCameraPosition.z;
+            
+            // Set up lighting
+            var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+            directionalLight.position.set(0, 1, 0);
+            var ambientLight = new THREE.AmbientLight(0x808080);
+            
+            // Add lighting to the scene
+            scene.add(directionalLight);
+            scene.add(ambientLight);
+            
+            // you can then access all the frequency and volume data
+            // and use it to draw whatever you like on your canvas
+            for (var i = 0; i < audioSource.streamData.length; i++)
+            {
+                // do something with each value. Here's a simple example
+                var val = audioSource.streamData[i];
+                var red = val;
+                var green = 255 - val;
+                var blue = val / 2; 
+                context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+                context.fillRect(i * 2, 0, 2, 200);
+                // use lines and shapes to draw to the canvas is various ways. Use your imagination!
+                
+                // Set up cubes
+                var geometry = new THREE.BoxGeometry(1, 1, 1);
+                var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
+                var cube = new THREE.Mesh(geometry, material);
+                
+                // Add cube to the scene
+                scene.add(cube);
+                
+                // Keep reference to cube
+                cubes.push(cube);
+            }
+            
+            // Schedule next animation frame
+            requestAnimationFrame(draw);
+        };
+        
+        // Begin stream and drawing runs
+        audioSource.playStream(loader.streamUrl);
+        draw();
 	}
 	</script>
 </head>
