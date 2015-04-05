@@ -1,4 +1,4 @@
-function cubeAnimation()
+function cubeOrSnowAnimation(whichAnimation)
 {
     var player = document.getElementById('player');
     var canvasElement = document.getElementById('canvas');
@@ -7,14 +7,14 @@ function cubeAnimation()
     var audioSource = new SoundCloudAudioSource(player);
 
     // Assign choice
-    var choice = 1;
+    var choice = whichAnimation;
 
     // Scene set-up
 
     // Configuration variables
     var numSamples = audioSource.streamData.length;
     var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-    var maxDisplacement = { width: 30, height: 0, length: 0 };
+    var maxDisplacement = { width: 30, height: 8, length: 0 };
     var displacementScalar = 0.02;
     var lightStartPosition = { x: 0, y: 0, z: 20 };
     var numberMovingLights = 3;
@@ -69,7 +69,7 @@ function cubeAnimation()
                 var cube = new THREE.Mesh(geometry, material);
                 
                 cube.position.x = -maxDisplacement.width + cubeSpacing * i;
-                cube.position.y = startingCubePosition.y;
+                cube.position.y = startingCubePosition.y + (-maxDisplacement.height + maxDisplacement.height * 2 * Math.random());
                 cube.position.z = startingCubePosition.z;
                 
                 // Add cube to the scene
@@ -109,7 +109,7 @@ function cubeAnimation()
                     materials.push(new THREE.PointCloudMaterial({ size: size, map: sprite, blending: THREE.AdditiveBlending, depthTest: false, transparent: true }));
                     materials[j].color.setHSL(color[0], color[1], color[2]);
                     
-                    var particles = new THREE.PointCloud(geometry, materials[i]);
+                    var particles = new THREE.PointCloud(geometry, materials[j]);
                     
                     particles.rotation.x = Math.random() * 6;
                     particles.rotation.y = Math.random() * 6;
@@ -117,6 +117,8 @@ function cubeAnimation()
                     
                     scene.add(particles);
                 }
+                
+                renderer.setPixelRatio(window.devicePixelRatio);
                 break;
             default:
                 console.log("Impossible to reach here");
@@ -160,14 +162,11 @@ function cubeAnimation()
                     
                     // Displace cubes
                     var displacement = val * displacementScalar;
-                    cube.position.y = startingCubePosition.y + (Math.random() < 0.5) ? displacement : -displacement; // randomize direction of displacement
+                    cube.position.z = startingCubePosition.z + (Math.random() < 0.5) ? displacement : -displacement; // randomize direction of displacement
                     
                     // Rotate cubes
                     cube.rotation.x += 0.2 * Math.random(); // randomize rotation speed
                     cube.rotation.y += 0.2 * Math.random();
-                    
-                    // Render scene
-                    renderer.render(scene, camera);
                     break;
                 case 1: // snowflakes
                     camera.position.x += 0.05;
@@ -200,6 +199,9 @@ function cubeAnimation()
             }
         }
         
+        // Render scene
+        renderer.render(scene, camera);
+        
         // Schedule next animation frame
         requestAnimationFrame(draw);
     };
@@ -207,6 +209,16 @@ function cubeAnimation()
     // Begin stream and drawing runs
     audioSource.playStream(loader.streamUrl);
     draw();
+}
+
+function cubeAnimation()
+{
+    cubeOrSnowAnimation(0);
+}
+
+function snowAnimation()
+{
+    cubeOrSnowAnimation(1);
 }
 
 function fireworks() {
@@ -403,5 +415,4 @@ function fireworks() {
 	
 	// Begin stream and drawing runs
     audioSource.playStream(loader.streamUrl);
-    draw();
 }
