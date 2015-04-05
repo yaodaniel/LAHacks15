@@ -47,6 +47,8 @@ $id = $_GET['song'];
 			player.play();
 		}
 	};
+	</script>
+	<script>
 	var SoundcloudLoader = function(player) {
 		var self = this;
         var clientID = '0a25f7c9ec955ced6294e9e5dcbbb532';
@@ -66,6 +68,8 @@ $id = $_GET['song'];
 			}
 		}
 	}
+	</script>
+	<script>
 	window.onload = function() {
         var player = document.getElementById('player');
         var canvasElement = document.getElementById('canvas');
@@ -134,7 +138,6 @@ $id = $_GET['song'];
 	}
 	</script>
 </head>
-<div class="container">
 <body>
 	<canvas id="canvas" width="1600" height="408" style="height:80vh; width:100vw">
 	<audio id="player" controls="" autoplay="" preload autobuffer></audio>
@@ -145,5 +148,4 @@ $id = $_GET['song'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
              
 </body>
-</div>
 </html>
