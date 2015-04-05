@@ -16,7 +16,6 @@ $id = $_GET['song'];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
 	<script src="js/Detector.js"></script>
 	<script src="js/stats.min.js"></script>
-	<script src="js/three.min.js"></script>
 
 	<script>
 	var SoundCloudAudioSource = function(player) {
