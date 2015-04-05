@@ -119,7 +119,7 @@ $id = $_GET['song'];
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="">Home</a>
+			<a class="navbar-brand" href="/index.html">Home</a>
 			<a class="navbar-brand" href="">Sign in</a>
 			<a class="navbar-brand" href="">Register</a>
 			<a class="navbar-brand" href="">Share</a>
@@ -127,8 +127,8 @@ $id = $_GET['song'];
 	</div>
 </nav>
 <body>
-	<canvas id="canvas" width="1600" height="408" style="height:80vh; width:100vw">
-	<audio id="player" controls="" autoplay="" preload autobuffer></audio>
+	<audio id="player" controls="" autoplay="" preload autobuffer style="width:100%"></audio>
+	<canvas id="canvas" width="100%" height="0%">
 	
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
