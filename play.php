@@ -57,27 +57,47 @@ $id = $_GET['song'];
 		self.streamUrl = audioTagSrc = songUrl + '?client_id=' + clientID;
 		
 		this.directStream = function(direction){
+		
+			this.player.setAttribute('src',this.streamUrl);
+			this.player.play();
 			if(direction=='toggle'){
 				this.player.play();
 			} else {
 				this.player.pause();
 			}
 		}
-		this.player.setAttribute('src',this.streamUrl);
-		this.player.play();
 	}
 	</script>
 	<script>
 	window.onload = function() {
 		var player = document.getElementById('player');
+		var canvasElement = document.getElementById('canvas');
+		var context = canvasElement.getContext("2d");
 		var loader = new SoundcloudLoader(player);
 		var audioSource = new SoundCloudAudioSource(player);
+		var draw = function() {
+    // you can then access all the frequency and volume data
+    // and use it to draw whatever you like on your canvas
+    for(var bin = 0; bin < audioSource.streamData.length; bin ++) {
+        // do something with each value. Here's a simple example
+        var val = audioSource.streamData[bin];
+        var red = val;
+        var green = 255 - val;
+        var blue = val / 2; 
+        context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+        context.fillRect(bin * 2, 0, 2, 200);
+        // use lines and shapes to draw to the canvas is various ways. Use your imagination!
+    }
+    requestAnimationFrame(draw);
+	};
+		
 		audioSource.playStream(loader.streamUrl);
+		draw();
 	}
 	</script>
 </head>
 <body>
-	<canvas width="1600" height="408" style="height:80vh; width:100vw">
+	<canvas id="canvas" width="1600" height="408" style="height:80vh; width:100vw">
 	<audio id="player" controls="" autoplay="" preload autobuffer></audio>
 	
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
