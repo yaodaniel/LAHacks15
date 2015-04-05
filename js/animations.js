@@ -14,7 +14,7 @@ function cubeOrSnowAnimation(whichAnimation)
     // Configuration variables
     var numSamples = audioSource.streamData.length;
     var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-    var maxDisplacement = { width: 30, height: 8, length: 0 };
+    var maxDisplacement = { width: 30, height: 30, length: 0 };
     var displacementScalar = 0.02;
     var lightStartPosition = { x: 0, y: 0, z: 20 };
     var numberMovingLights = 3;
@@ -68,7 +68,7 @@ function cubeOrSnowAnimation(whichAnimation)
                 var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
                 var cube = new THREE.Mesh(geometry, material);
                 
-                cube.position.x = -maxDisplacement.width + cubeSpacing * i;
+                cube.position.x = startingCubePosition.x + (-maxDisplacement.width + maxDisplacement.width * 2 * Math.random()); //-maxDisplacement.width + cubeSpacing * i;
                 cube.position.y = startingCubePosition.y + (-maxDisplacement.height + maxDisplacement.height * 2 * Math.random());
                 cube.position.z = startingCubePosition.z;
                 
@@ -88,7 +88,7 @@ function cubeOrSnowAnimation(whichAnimation)
                                THREE.ImageUtils.loadTexture("./assets/snowflake3.png"),
                                THREE.ImageUtils.loadTexture("./assets/snowflake4.png"),
                                THREE.ImageUtils.loadTexture("./assets/snowflake5.png"),
-                               ];
+                        ];
                 
                 parameters = [
                                   [ [1.0, 0.2, 0.5], sprites[0], 20 ],
@@ -96,7 +96,7 @@ function cubeOrSnowAnimation(whichAnimation)
                                   [ [0.90, 0.05, 0.5], sprites[2], 10 ],
                                   [ [0.85, 0.05, 0.5], sprites[3], 8 ],
                                   [ [0.8, 0, 0.5], sprites[4], 5 ]
-                                  ];
+                            ];
                 
                 var materials = [];
                 
@@ -159,6 +159,11 @@ function cubeOrSnowAnimation(whichAnimation)
                     //context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
                     //context.fillRect(i * 2, 0, 2, 200);
                     // use lines and shapes to draw to the canvas is various ways. Use your imagination!
+                    
+                    // Attempt to rotate camera
+                    camera.rotation.z += 0.0001;
+                    camera.rotation.x += 0.0001;
+                    camera.rotation.y += 0.0001;
                     
                     // Displace cubes
                     var displacement = val * displacementScalar;
