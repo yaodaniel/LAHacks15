@@ -104,8 +104,9 @@ $id = $_GET['song'];
     }
 
 	window.onload = function() {
-        cubeAnimation();
+        //cubeAnimation();
 	    //fireworks();
+	    blackHole();
 	}
 	</script>
 </head>
