@@ -9,14 +9,14 @@
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
 	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
-        // "Constants"
-        var dontCare = -1;
-        
-	function searchTrack(query)
-    {
+	//function searchTrack(query)
+	jQuery(document).ready(function($) {
+	$("#songSearch").keyup(function(){
+		var query = $("#songSearch").val();
+
         SC.get('/tracks', { q: query }, function name(tracks) {
-            console.log(tracks);
                
            // Configuration
            var defaultNumSuggestions = 10;
@@ -37,7 +37,9 @@
                }
            }
         });
-	}
+		return false;
+	});
+	});
 	</script>
 	<script>
 	function changeBackground(){
@@ -61,20 +63,18 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/index.html">Home</a>
+			<a class="navbar-brand" href="">Home</a>
 		</div>
 	</div>
 </nav>
 <div class="container">
-	
-	
 	<div class="row" style="position: relative; top:30vh">
-	<h1 class="text-center" style="font-size:60px; color:rgb(197,48,144);">Visualize your favorite song!</h1>
+	
 		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
 		  <div class="col-xs-8 col-xs-offset-2" id="form">
-			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:60px;
+			<input type="text" name="q" id="songSearch" style="background-color: rgba(255,255,255,0.8); height:60px; font-size: x-large;
 				border-radius:20px"
-				placeholder="Search for a song..." class="form-control">
+				placeholder="Search for a song..." class="form-control" autocomplete="off">
 		  </div>
 		</form>
 		<div class="col-xs-8 col-xs-offset-2" style="border-radius:20px">
@@ -86,5 +86,13 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </div>
+<div style="height:350px; clear:both;"></div>
 </body>
+<div id="footer" style="height:50px; width:100%; background-color: rgba(0,0,0,0.7); position:fixed; bottom:0">
+	<div class="container">
+		<div class="col-xs-8 col-xs-offset-3" id="form">
+		<p class="muted credit" style="color:#337ab7; padding-top:5px">Website made and designed by Daniel Yao, Ian Cordero, & Paul Grad at LAHacks15</p>
+		</div>
+	</div>
+</div>
 </html>
