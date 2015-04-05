@@ -387,13 +387,13 @@ function fireworks() {
 			if ( object instanceof THREE.Line ) {
 				object.rotation.y = time * ( i < 4 ? ( i + 1 ) : - ( i + 1 ) );
 				if(val > 0.90) {
-					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*sin(time);
+					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*Math.sin(time);
 				}
 				else if(val < 0.10) {
-					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*sin(time);
+					object.scale.x = object.scale.y = object.scale.z = object.originalScale+(0.5*val)*Math.sin(time);
 				}
                 else
-                    object.scale.x = object.scale.y = object.scale.z = object.originalScale-(0.05*val)*sin(time);
+                    object.scale.x = object.scale.y = object.scale.z = object.originalScale-(0.05*val)*Math.sin(time);
 			}
 		}
 	}
