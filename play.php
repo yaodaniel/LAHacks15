@@ -53,10 +53,11 @@ $id = $_GET['song'];
     // "Constants"
 	var SoundcloudLoader = function(player) {
 		var self = this;
+        var clientID = '0a25f7c9ec955ced6294e9e5dcbbb532';
 		this.player = player;
-		SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});
-		var songUrl = <?php echo $id ?>;
-		self.streamUrl = audioTagSrc = songUrl + '?client_id=' + client_id;
+		SC.initialize({ client_id: clientID });
+		var songUrl = "<?php echo $id ?>";
+		self.streamUrl = audioTagSrc = songUrl + '?client_id=' + clientID;
 		
 		this.directStream = function(direction){
 			if(direction=='toggle'){
@@ -70,7 +71,7 @@ $id = $_GET['song'];
 	}
 	</script>
 	<script>
-	window.onload = function init() {
+	window.onload = function() {
 		var player = document.getElementById('player');
 		var loader = new SoundcloudLoader(player);
 		var audioSource = new SoundCloudAudioSource(player);
