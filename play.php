@@ -91,10 +91,10 @@ $id = $_GET['song'];
         return sum(numbers) / numbers.length;
     }
 
-    function boundsMap(value, )
-    {
-        
-    }
+    //function boundsMap(value, )
+    //{
+    //
+    //}
 
 	window.onload = function() {
         var player = document.getElementById('player');
