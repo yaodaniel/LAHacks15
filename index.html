@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Soundcloud -->
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
-	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});</script>
-	<script>
+	<script>SC.initialize({ client_id: '0a25f7c9ec955ced6294e9e5dcbbb532'});
         // "Constants"
         var dontCare = -1;
         
@@ -40,8 +39,6 @@
            }
         });
 	}
-	</script>
-	<script>
 	function changeBackground(){
 		var images = ['nature0.jpg', 'nature1.jpg', 'nature2.jpg', 'nature3.jpg', 'nature4.jpg', 'nature5.jpg'];
 		var randomNum = Math.floor(Math.random() * images.length);
@@ -49,7 +46,6 @@
 		document.body.style.backgroundImage = "url(assets/"+imageToChange+")";
 	}
 </script>
-	</script>
 	<title>LivingSound</title>
 </head>
 
@@ -68,8 +64,6 @@
 	</div>
 </nav>
 <div class="container">
-	
-	
 	<div class="row" style="position: relative; top:30vh">
 	<h1 class="text-center" style="font-size:60px; color:rgb(197,48,144);">Visualize your favourite song!</h1>
 		<form name="query" action="javascript:searchTrack(document.getElementById('songSearch').value)" method="GET" role="search" autocomplete="off">
