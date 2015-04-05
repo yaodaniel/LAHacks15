@@ -70,6 +70,9 @@ $id = $_GET['song'];
 	}
 	</script>
 	<script>
+    // State globals
+    var cubes = [];
+
 	window.onload = function() {
         var player = document.getElementById('player');
         var canvasElement = document.getElementById('canvas');
@@ -77,55 +80,71 @@ $id = $_GET['song'];
         var loader = new SoundcloudLoader(player);
         var audioSource = new SoundCloudAudioSource(player);
         
+        // Scene set-up
+        
+        // Configuration variables
+        var defaultCameraPosition = { x: 0, y: 0, z: 10 };
+        var startingCubePosition = { x: 0, y: 0, z: 0 };
+        var maxDisplacement = { width: 0, height: 15, length: 0 };
+        var displacementScalar = 10;
+        
+        // Initialize the scene
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        camera.position.z = defaultCameraPosition.z;
+        
+        // Set up lighting
+        var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+        directionalLight.position.set(0, 1, 0);
+        var ambientLight = new THREE.AmbientLight(0x808080);
+        
+        // Add lighting to the scene
+        scene.add(directionalLight);
+        scene.add(ambientLight);
+        
+        for (var i = 0; i < audioSource.streamData.length; i++)
+        {
+            // Set up cubes
+            var geometry = new THREE.BoxGeometry(1, 1, 1);
+            var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
+            var cube = new THREE.Mesh(geometry, material);
+            
+            cube.position.x = startingCubePosition.x;
+            cube.position.y = startingCubePosition.y + (-maxDisplacement.y + Math.random() * maxDisplacement.y);
+            cube.position.z = startingCubePosition.z;
+            
+            // Add cube to the scene
+            scene.add(cube);
+            
+            // Keep reference to cube
+            cubes.push(cube);
+        }
+        
         var draw = function() {
-            var cubes = [];
-            
-            // Configuration variables
-            var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-            var startingCubePosition = { x: 0, y: 0, z: 0 };
-            
-            // State variables
-            
-            // Initialize the scene
-            var scene = new THREE.Scene();
-            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            var renderer = new THREE.WebGLRenderer();
-            renderer.setSze(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-            camera.position.z = defaultCameraPosition.z;
-            
-            // Set up lighting
-            var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
-            directionalLight.position.set(0, 1, 0);
-            var ambientLight = new THREE.AmbientLight(0x808080);
-            
-            // Add lighting to the scene
-            scene.add(directionalLight);
-            scene.add(ambientLight);
-            
             // you can then access all the frequency and volume data
             // and use it to draw whatever you like on your canvas
             for (var i = 0; i < audioSource.streamData.length; i++)
             {
+                var cube = cubes[i];
+                
                 // do something with each value. Here's a simple example
                 var val = audioSource.streamData[i];
-                var red = val;
-                var green = 255 - val;
-                var blue = val / 2; 
-                context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-                context.fillRect(i * 2, 0, 2, 200);
+                //var red = val;
+                //var green = 255 - val;
+                //var blue = val / 2; 
+                //context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+                //context.fillRect(i * 2, 0, 2, 200);
                 // use lines and shapes to draw to the canvas is various ways. Use your imagination!
                 
-                // Set up cubes
-                var geometry = new THREE.BoxGeometry(1, 1, 1);
-                var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
-                var cube = new THREE.Mesh(geometry, material);
+                // Displace cubes
+                //cube.position.y = startingCubePosition.y + val * displacementScalar;
                 
-                // Add cube to the scene
-                scene.add(cube);
-                
-                // Keep reference to cube
-                cubes.push(cube);
+                // Rotate cubes
+                //cube.rotation.x = 0.1;
+                //cube.rotation.y = 0.1;
             }
             
             // Schedule next animation frame
