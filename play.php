@@ -18,6 +18,7 @@ $id = $_GET['song'];
 	<script src="js/stats.min.js"></script>
 	<script src="js/three.min.js"></script>
 
+	//Following two scripts are for blackHole()
 	<script id="vertexShader" type="x-shader/x-vertex">
 
 			void main()	{
@@ -152,6 +153,7 @@ $id = $_GET['song'];
 	window.onload = function() {
         cubeAnimation();
 	    //fireworks();
+	    //blackHole();
 	}
 	</script>
 </head>
