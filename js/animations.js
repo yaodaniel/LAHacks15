@@ -13,10 +13,10 @@ function cubeOrSnowAnimation(whichAnimation)
 
     // Configuration variables
     var numSamples = audioSource.streamData.length;
-    var defaultCameraPosition = { x: 0, y: 0, z: 10 };
-    var maxDisplacement = { width: 30, height: 30, length: 0 };
-    var displacementScalar = 0.02;
-    var lightStartPosition = { x: 0, y: 0, z: 20 };
+    var defaultCameraPosition = { x: 0, y: 0, z: 1000 };
+    var maxDisplacement = { width: 2500, height: 2500, length: 100 };
+    var displacementScalar = 0.1;
+    var lightStartPosition = { x: 0, y: 0, z: 200 };
     var numberMovingLights = 3;
     var lightDirections = [];
     var lightSpeeds = [];
@@ -34,12 +34,12 @@ function cubeOrSnowAnimation(whichAnimation)
     camera.position.z = defaultCameraPosition.z;
     for (var i = 0; i < numberMovingLights; i++)
     {
-        lightDirections.push((Math.random() < 0.5) ? 1 : -1);
+        lightDirections.push((Math.random() < 0.05) ? 1 : -1);
         lightSpeeds.push(defaultLightSpeed + Math.random() * 2);
     }
 
     // Set up lighting
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+    var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 5);
     directionalLight.position.set(0, 1, 0);
     var ambientLight = new THREE.AmbientLight(0x808080);
     var movingLights = [];
@@ -53,6 +53,27 @@ function cubeOrSnowAnimation(whichAnimation)
 
     scene.add(directionalLight);
     scene.add(ambientLight);
+    
+    var moreCubes = [];
+    
+    for (var i = 0; i < 1000; i++)
+    {
+        var boxSize = Math.random() * 10 + 10;
+        var geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+        var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
+        
+        var cube = new THREE.Mesh(geometry, material);
+        
+        cube.position.x = startingCubePosition.x + (-maxDisplacement.width + maxDisplacement.width * 2 * Math.random());
+        cube.position.y = startingCubePosition.y + (-maxDisplacement.height + maxDisplacement.height * 2 * Math.random());
+        cube.position.z = startingCubePosition.z + (-maxDisplacement.length + maxDisplacement.length * 2 * Math.random());
+        
+        cube.velocity = Math.random() * 30 + 5;
+        
+        scene.add(cube);
+        
+        moreCubes.push(cube);
+    }
 
     for (var i = 0; i < numSamples; i++)
     {
@@ -64,13 +85,19 @@ function cubeOrSnowAnimation(whichAnimation)
         {
             case 0: // cube geometry
                 // Set up cubes
-                var geometry = new THREE.BoxGeometry(1, 1, 1);
+                var boxSize = Math.random() * 10 + 10;
+                
+                var geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
                 var material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xFFFFFF } );
                 var cube = new THREE.Mesh(geometry, material);
                 
                 cube.position.x = startingCubePosition.x + (-maxDisplacement.width + maxDisplacement.width * 2 * Math.random()); //-maxDisplacement.width + cubeSpacing * i;
                 cube.position.y = startingCubePosition.y + (-maxDisplacement.height + maxDisplacement.height * 2 * Math.random());
-                cube.position.z = startingCubePosition.z;
+                cube.position.z = startingCubePosition.z + (-maxDisplacement.length + maxDisplacement.length * 2 * Math.random());
+                
+                cube.rotation.x = Math.random() * 6;
+                cube.rotation.y = Math.random() * 6;
+                cube.rotation.z = Math.random() * 6;
                 
                 // Add cube to the scene
                 scene.add(cube);
@@ -141,6 +168,32 @@ function cubeOrSnowAnimation(whichAnimation)
             }
         }
         
+        for (var i = 0; i < moreCubes.length; i++)
+        {
+            var cube = moreCubes[i];
+            
+            var speed = cube.velocity;
+            cube.position.x += speed;
+            if (cube.position.x > maxDisplacement.width)
+            {
+                cube.position.x = -maxDisplacement.width;
+            }
+            
+            cube.rotation.x += 0.2 + 0.5 * Math.random();
+            cube.rotation.y += 0.2 + 0.5 * Math.random();
+            
+            // Displace cubes
+            var val = audioSource.streamData[i % numSamples];
+            var displacement = val * displacementScalar;
+            
+            cube.position.y += displacement;
+            
+            if (cube.position.y >= maxDisplacement.height)
+            {
+                cube.position.y = -maxDisplacement.height;
+            }
+        }
+        
         // you can then access all the frequency and volume data
         // and use it to draw whatever you like on your canvas
         for (var i = 0; i < numSamples; i++)
@@ -160,13 +213,11 @@ function cubeOrSnowAnimation(whichAnimation)
                     //context.fillRect(i * 2, 0, 2, 200);
                     // use lines and shapes to draw to the canvas is various ways. Use your imagination!
                     
-                    // Attempt to rotate camera
-                    camera.rotation.z += 0.0001;
-                    camera.rotation.x += 0.0001;
-                    camera.rotation.y += 0.0001;
+                    // Rotate camera
+                    camera.rotation.z += 0.00001;
                     
                     // Displace cubes
-                    var displacement = val * displacementScalar;
+                    var displacement = val * displacementScalar * 10;
                     cube.position.z = startingCubePosition.z + (Math.random() < 0.5) ? displacement : -displacement; // randomize direction of displacement
                     
                     // Rotate cubes

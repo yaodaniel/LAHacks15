@@ -152,6 +152,8 @@ void main()	{
 
     var animationState = Math.floor(Math.random() * totalAnimationStates);
 
+    console.log(animationState);
+
     function setAnimation()
     {
         switch (animationState)
@@ -172,7 +174,7 @@ void main()	{
         setAnimation();
     }
 
-    function keyControls(e) {
+    function keyControls(e) { // wip
         switch(e.keyCode) {
             case 32:
                 // spacebar pressed
